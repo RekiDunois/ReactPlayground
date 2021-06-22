@@ -47,7 +47,10 @@ class Game extends React.Component {
         super(props);
         this.state = {
             history: [
-                { squares: Array(9).fill(null) }
+                {
+                    squares: Array(9).fill(null),
+                    changePoint: null
+                }
             ],
             stepNumber: 0,
             xIsNext: true
@@ -64,7 +67,8 @@ class Game extends React.Component {
         squares[i] = this.state.xIsNext ? 'X' : 'O';
         this.setState({
             history: history.concat([{
-                squares: squares
+                squares: squares,
+                changePoint: i
             }]),
             stepNumber: history.length,
             xIsNext: !this.state.xIsNext
@@ -78,12 +82,42 @@ class Game extends React.Component {
         });
     }
 
+    subscriptToCoordinates(move) {
+        if (move < 3) {
+            return ({
+                x: move,
+                y: 0
+            });
+        } else if (move < 6) {
+            return ({
+                x: move,
+                y: 1,
+            });
+        } else if (move < 9) {
+            return ({
+                x: move,
+                y: 2,
+            })
+        }
+    }
+
+    buildDesc(move, history) {
+        let result = ``;
+        if (move) {
+            const point = this.subscriptToCoordinates(history[move].changePoint);
+            result = `Go to move #${move} :(${point.x},${point.y})`;
+        } else {
+            result = 'Go to game start';
+        }
+        return result;
+    }
+
     render() {
         const history = this.state.history;
         const current = history[this.state.stepNumber];
         const winner = calculateWinner(current.squares);
         const move = history.map((step, move) => {
-            const desc = move ? 'Go to move #' + move : 'Go to game start';
+            const desc = this.buildDesc(move, history);
             return (
                 <li key={move}>
                     <button onClick={() => this.jumpTo(move)}>
