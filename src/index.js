@@ -53,6 +53,7 @@ class Game extends React.Component {
                 }
             ],
             stepNumber: 0,
+            listReversed: false,
             xIsNext: true
         };
     }
@@ -112,6 +113,10 @@ class Game extends React.Component {
         return result;
     }
 
+    reversList(move) {
+
+    }
+
     render() {
         const history = this.state.history;
         const current = history[this.state.stepNumber];
@@ -140,7 +145,10 @@ class Game extends React.Component {
                         onClick={(i) => this.handleClick(i)} />
                 </div>
                 <div className="game-info">
-                    <div>{status}</div>
+                    <div>
+                        <div>{status}</div>
+                        {/* <button onClick={() => this.reversList(move)}></button> */}
+                    </div>
                     <ol>{move}</ol>
                 </div>
             </div>
