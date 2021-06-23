@@ -62,7 +62,8 @@ class Game extends React.Component {
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
         const current = history[history.length - 1];
         const squares = current.squares.slice();
-        if (calculateWinner(squares) || squares[i]) {
+        const result = calculateWinner(squares);
+        if (result != 'not finish' || squares[i]) {
             return;
         }
         squares[i] = this.state.xIsNext ? 'X' : 'O';
@@ -132,10 +133,14 @@ class Game extends React.Component {
             );
         })
         let status;
-        if (winner) {
-            status = 'Winner: ' + winner;
+        if (winner != 'not finish') {
+            if (winner == 'draw') {
+                status = winner
+            } else {
+                status = 'Winner: ' + winner;
+            }
         } else {
-            status = 'Next playe: ' + (this.state.xIsNext ? 'X' : 'O');
+            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
         }
         return (
             <div className="game">
@@ -173,7 +178,12 @@ function calculateWinner(squares) {
             return squares[a];
         }
     }
-    return null;
+    let result = 'draw';
+    squares.forEach(element => {
+        if (element === null)
+            result = 'not finish';
+    });
+    return result;
 }
 
 // ========================================
