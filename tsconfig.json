@@ -21,7 +21,8 @@
     "noEmit": true
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "tests/index.test.tsx"
   ],
   "exclude": [
     "./node_modules",
