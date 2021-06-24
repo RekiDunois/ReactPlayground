@@ -7,30 +7,35 @@ export interface Props {
 }
 
 class Board extends React.Component<Props, object> {
-    renderSquare(i: number) {
+    renderSingleSquare(i: number) {
         return <Square
             value={this.props.squares[i]}
             onClick={() => this.props.onClick(i)} />;
     }
 
+    renderSquares(row: number, colo: number) {
+        let squares: Array<JSX.Element> = [];
+        let rows: Array<JSX.Element> = [];
+        let current = 0;
+        for (let r = 0; r < row; r++) {
+            for (let c = 0; c < colo; c++) {
+                squares[current] = this.renderSingleSquare(current);
+                current++;
+            }
+            rows.push(
+                <div className="board-row">
+                    {squares}
+                </div>
+            );
+            squares = [];
+        }
+        return rows;
+    }
+
     render() {
         return (
             <div>
-                <div className="board-row">
-                    {this.renderSquare(0)}
-                    {this.renderSquare(1)}
-                    {this.renderSquare(2)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(3)}
-                    {this.renderSquare(4)}
-                    {this.renderSquare(5)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(6)}
-                    {this.renderSquare(7)}
-                    {this.renderSquare(8)}
-                </div>
+                {this.renderSquares(3, 3)}
             </div>
         );
     }
