@@ -8,11 +8,12 @@ describe("Single Square testing", () => {
         const clickFun = jest.fn();
         const prop: Props = {
             onClick: clickFun,
-            value: ''
+            value: '114514'
         }
         const { getByRole } = render(<Square value={prop.value} onClick={() => prop.onClick(null)} />)
         const btn = getByRole("button");
         fireEvent.click(btn ? btn : null);
         expect(clickFun).toBeCalled()
+        expect(btn.textContent).toEqual(prop.value);
     });
 });
