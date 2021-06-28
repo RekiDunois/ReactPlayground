@@ -1,5 +1,4 @@
 import React from 'react';
-import '../index.css';
 import Board from "./Board";
 
 export interface Props {
@@ -18,9 +17,16 @@ export interface State {
     xIsNext: boolean;
 }
 
+export enum Player {
+    Empty = -1,
+    Circle,
+    Cross,
+}
+
 export interface Point {
     x: number;
     y: number;
+    value?: Player;
 }
 
 class Game extends React.Component<object, State> {

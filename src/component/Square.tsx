@@ -1,8 +1,9 @@
 import * as React from 'react';
+import { Point } from './Game';
 
 export interface Props {
     onClick: React.MouseEventHandler;
-    value: string;
+    point: Point;
 }
 
 function Square(props: Props) {
@@ -10,7 +11,7 @@ function Square(props: Props) {
         <button
             className="square"
             onClick={props.onClick}>
-            {props.value}
+            {props.point.value}
         </button>
     );
 }
