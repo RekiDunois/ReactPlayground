@@ -23,9 +23,8 @@ describe('Game rander', () => {
     };
     const actual = (<Game row={prop.row} col={prop.col} winCase={prop.winCase} />);
     test('Checkerboard size', () => {
-        const { getAllByRole, baseElement } = render(actual, container);
+        const { baseElement } = render(actual, container);
         const btn = baseElement.getElementsByClassName('square');
-        // const btn = getAllByRole('456');
         expect(btn.length).toEqual(prop.row * prop.col);
     });
 });
@@ -52,9 +51,9 @@ describe('Click piece', () => {
         expect(status[0].textContent).toEqual('Next player: ' + (state.xIsNext ? 'O' : 'X'));
     });
     test('Add History record', () => {
-        const { getAllByRole, baseElement } = render(actual, container);
+        const { getAllByRole } = render(actual, container);
         const btn = getAllByRole('button');
         fireEvent.click(btn[clickNumber]);
         expect(getAllByRole('list')[0].childElementCount).toEqual(state.stepNumber + 2);
-    })
+    });
 });
