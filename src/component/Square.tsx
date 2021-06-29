@@ -11,13 +11,27 @@ function Square(props: Props) {
     if (props.point !== undefined && props.point.value !== undefined) {
         content = props.point.value;
     }
+    const text = playerToString(content);
     return (
         <button
             className="square"
             onClick={props.onClick}>
-            {content}
+            {text}
         </button>
     );
+}
+
+function playerToString(n: Player): string {
+    switch (n) {
+        case Player.Empty:
+            return '';
+        case Player.Cross:
+            return 'X';
+        case Player.Circle:
+            return 'O'
+        default:
+            return '';
+    }
 }
 
 export default Square;

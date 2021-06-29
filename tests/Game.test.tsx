@@ -13,7 +13,7 @@ afterEach(() => {
     unmountComponentAtNode(container);
     container.remove();
     container = null;
-})
+});
 
 describe('Game rander', () => {
     const prop: Props = {
