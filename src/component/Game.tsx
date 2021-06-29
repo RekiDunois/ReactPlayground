@@ -1,5 +1,4 @@
 import React from 'react';
-import '../index.css';
 import Board from "./Board";
 
 export interface Props {
@@ -136,7 +135,7 @@ class Game extends React.Component<object, State> {
                 </div>
                 <div className="game-info">
                     <div>
-                        <div>{status}</div>
+                        <div className="game-status">{status}</div>
                         {/* <button onClick={() => this.reversList(move)}></button> */}
                     </div>
                     <ol>{move}</ol>
