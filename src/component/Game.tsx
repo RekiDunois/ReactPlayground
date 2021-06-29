@@ -2,12 +2,14 @@ import React from 'react';
 import Board from "./Board";
 
 export interface Props {
-
+    row: number;
+    col: number;
+    winCase: number;
 }
 
 export interface History {
-    squares: Array<string>;
-    changePoint: number;
+    squares: Array<Point>;
+    changePoint: Point;
 }
 
 export interface State {
@@ -29,14 +31,18 @@ export interface Point {
     value?: Player;
 }
 
-class Game extends React.Component<object, State> {
+class Game extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
             history: [
                 {
-                    squares: Array(9).fill(null),
-                    changePoint: -1
+                    squares: Array<Point>(props.row * props.col),
+                    changePoint: {
+                        x: -1,
+                        y: -1,
+                        value: Player.Empty
+                    }
                 }
             ],
             stepNumber: 0,
@@ -53,11 +59,11 @@ class Game extends React.Component<object, State> {
         if (result !== 'not finish' || squares[i]) {
             return;
         }
-        squares[i] = this.state.xIsNext ? 'X' : 'O';
+        squares[i].value = this.state.xIsNext ? Player.Cross : Player.Circle;
         this.setState({
             history: history.concat([{
                 squares: squares,
-                changePoint: i
+                changePoint: squares[i]
             }]),
             stepNumber: history.length,
             xIsNext: !this.state.xIsNext
@@ -97,7 +103,7 @@ class Game extends React.Component<object, State> {
     buildDesc(move: number, history: Array<History>) {
         let result = ``;
         if (move) {
-            const point = this.subscriptToCoordinates(history[move].changePoint);
+            const point = history[move].changePoint;
             result = `Go to move #${move} :(${point.x},${point.y})`;
         } else {
             result = 'Go to game start';
@@ -138,7 +144,9 @@ class Game extends React.Component<object, State> {
                 <div className="game-board">
                     <Board
                         squares={current.squares}
-                        onClick={(i: number) => this.handleClick(i)} />
+                        onClick={(i: number) => this.handleClick(i)}
+                        row={this.props.row}
+                        col={this.props.col} />
                 </div>
                 <div className="game-info">
                     <div>
@@ -152,7 +160,7 @@ class Game extends React.Component<object, State> {
     }
 }
 
-function calculateWinner(squares: Array<string>) {
+function calculateWinner(squares: Array<Point>) {
     const lines = [
         [0, 1, 2],
         [3, 4, 5],

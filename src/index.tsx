@@ -6,6 +6,6 @@ import './index.css';
 // ========================================
 
 ReactDOM.render(
-    <Game />,
+    <Game row={4} col={4} winCase={3} />,
     document.getElementById('root')
 );
