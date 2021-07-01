@@ -7,11 +7,7 @@ export interface Props {
 }
 
 function Square(props: Props) {
-    let content = Player.Empty;
-    if (props.point !== undefined && props.point.value !== undefined) {
-        content = props.point.value;
-    }
-    const text = playerToString(content);
+    const text = playerToString(props.point.value);
     return (
         <button
             className="square"

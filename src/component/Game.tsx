@@ -28,7 +28,7 @@ export enum Player {
 export interface Point {
     x: number;
     y: number;
-    value?: Player;
+    value: Player;
 }
 
 class Game extends React.Component<Props, State> {
@@ -37,7 +37,11 @@ class Game extends React.Component<Props, State> {
         this.state = {
             history: [
                 {
-                    squares: Array<Point>(props.row * props.col),
+                    squares: Array<Point>(props.row * props.col).fill({
+                        x: -1,
+                        y: -1,
+                        value: Player.Empty
+                    }),
                     changePoint: {
                         x: -1,
                         y: -1,
@@ -75,29 +79,6 @@ class Game extends React.Component<Props, State> {
             stepNumber: step,
             xIsNext: (step % 2) === 0,
         });
-    }
-
-    subscriptToCoordinates(move: number): Point {
-        if (move < 3) {
-            return ({
-                x: move,
-                y: 0
-            });
-        } else if (move < 6) {
-            return ({
-                x: move,
-                y: 1,
-            });
-        } else if (move < 9) {
-            return ({
-                x: move,
-                y: 2,
-            })
-        }
-        return ({
-            x: -1,
-            y: -1
-        })
     }
 
     buildDesc(move: number, history: Array<History>) {
@@ -174,12 +155,11 @@ function calculateWinner(squares: Array<Point>) {
     for (let i = 0; i < lines.length; i++) {
         const [a, b, c] = lines[i];
         if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-            return squares[a];
         }
     }
     let result = 'draw';
     squares.forEach(element => {
-        if (element === null)
+        if (element.value === Player.Empty || element === undefined)
             result = 'not finish';
     });
     return result;

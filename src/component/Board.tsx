@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Point } from './Game';
+import { Player, Point } from './Game';
 import Square from './Square';
 
 export interface Props {
@@ -10,9 +10,17 @@ export interface Props {
 }
 
 class Board extends React.Component<Props, object> {
-    renderSingleSquare(i: number) {
+    renderSingleSquare(i: number, r: number, c: number) {
+        let p = this.props.squares[i];
+        if ((p.x || p.y) === -1) {
+            p = {
+                x: c,
+                y: r,
+                value: Player.Empty
+            }
+        }
         return <Square
-            point={this.props.squares[i]}
+            point={p}
             onClick={() => this.props.onClick(i)} />;
     }
 
@@ -22,7 +30,7 @@ class Board extends React.Component<Props, object> {
         let current = 0;
         for (let r = 0; r < row; r++) {
             for (let c = 0; c < colo; c++) {
-                squares[current] = this.renderSingleSquare(current);
+                squares[current] = this.renderSingleSquare(current, r, c);
                 current++;
             }
             rows.push(
