@@ -13,15 +13,11 @@ class Board extends React.Component<Props, object> {
     renderSingleSquare(i: number, r: number, c: number) {
         let p = this.props.squares[i];
         if ((p.x || p.y) === -1) {
-            p = {
-                x: c,
-                y: r,
-                value: Player.Empty
-            }
+            p = { x: c, y: r, value: Player.Empty }
         }
         return <Square
             point={p}
-            onClick={() => this.props.onClick(i)} />;
+            onClick={() => this.props.onClick(p)} />;
     }
 
     renderSquares(row: number, colo: number) {

@@ -55,19 +55,23 @@ class Game extends React.Component<Props, State> {
         };
     }
 
-    handleClick(i: number) {
+    handleClick(piece: Point) {
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
         const current = history[history.length - 1];
         const squares = current.squares.slice();
         const result = calculateWinner(squares);
-        if (result !== 'not finish' || squares[i]) {
+        if (result !== 'not finish' || piece.value !== Player.Empty) {
             return;
         }
-        squares[i].value = this.state.xIsNext ? Player.Cross : Player.Circle;
+        piece.value = this.state.xIsNext ? Player.Cross : Player.Circle;
+        squares.forEach(p => {
+            if (p.x === piece.x && p.y === piece.y)
+                p = piece;
+        });
         this.setState({
             history: history.concat([{
                 squares: squares,
-                changePoint: squares[i]
+                changePoint: piece
             }]),
             stepNumber: history.length,
             xIsNext: !this.state.xIsNext
@@ -125,7 +129,7 @@ class Game extends React.Component<Props, State> {
                 <div className="game-board">
                     <Board
                         squares={current.squares}
-                        onClick={(i: number) => this.handleClick(i)}
+                        onClick={(i: Point) => this.handleClick(i)}
                         row={this.props.row}
                         col={this.props.col} />
                 </div>
