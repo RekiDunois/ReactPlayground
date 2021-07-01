@@ -56,4 +56,14 @@ describe('Click piece', () => {
         fireEvent.click(btn[clickNumber]);
         expect(getAllByRole('list')[0].childElementCount).toEqual(state.stepNumber + 2);
     });
+    test('click cross to win', () => {
+        const { baseElement } = render(actual);
+        const result = baseElement.getElementsByClassName('game-status')[0].textContent;
+        expect(result).toEqual('Winner: X');
+    });
+    test('click to draw', () => {
+        const { baseElement } = render(actual);
+        const result = baseElement.getElementsByClassName('game-status')[0].textContent;
+        expect(result).toEqual('draw');
+    });
 });
