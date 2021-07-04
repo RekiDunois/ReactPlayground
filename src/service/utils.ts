@@ -1,7 +1,6 @@
 import { Player, Point } from "../component/Game";
 
-export default initCheckerBoard;
-function initCheckerBoard(row: number, col: number): Array<Point> {
+export function initCheckerBoard(row: number, col: number): Array<Point> {
     let result: Array<Point> = [];
     let singleRow: Array<Point> = [];
     for (let r = 0; r < row; r++) {
@@ -12,4 +11,8 @@ function initCheckerBoard(row: number, col: number): Array<Point> {
         singleRow = [];
     }
     return result;
+}
+
+export function copyPoints(Points: Point[]): Point[] {
+    return Points.slice();
 }

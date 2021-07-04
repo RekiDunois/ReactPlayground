@@ -1,5 +1,5 @@
 import React from 'react';
-import initCheckerBoard from '../service/utils';
+import { initCheckerBoard } from '../service/utils';
 import Board from "./Board";
 
 export interface Props {
@@ -53,18 +53,24 @@ class Game extends React.Component<Props, State> {
     }
 
     handleClick(piece: Point) {
-        const history = this.state.history.slice(0, this.state.stepNumber + 1);
-        const current = history[history.length - 1];
-        const squares = current.squares.slice();
-        const result = calculateWinner(squares);
+        let curPoint = {
+            x: piece.x,
+            y: piece.y,
+            value: piece.value
+        };
+        let history = this.state.history.slice(); // get total history
+        let squares = history[this.state.stepNumber].squares.slice(); // copy current squares
+        const result = calculateWinner(squares); // check game status
         if (result !== 'not finish' || piece.value !== Player.Empty) {
             return;
         }
-        piece.value = this.state.xIsNext ? Player.Cross : Player.Circle;
-        squares.forEach(p => {
-            if (p.x === piece.x && p.y === piece.y)
-                p = piece;
-        });
+        curPoint.value = this.state.xIsNext ? Player.Cross : Player.Circle;
+        for (let i = 0; i < squares.length; i++) {
+            let element = squares[i];
+            if (element.x === curPoint.x && element.y === curPoint.y)
+                squares[i].value = curPoint.value;
+        }
+        // update squares
         this.setState({
             history: history.concat([{
                 squares: squares,
