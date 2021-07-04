@@ -1,4 +1,5 @@
 import React from 'react';
+import initCheckerBoard from '../service/utils';
 import Board from "./Board";
 
 export interface Props {
@@ -37,11 +38,7 @@ class Game extends React.Component<Props, State> {
         this.state = {
             history: [
                 {
-                    squares: Array<Point>(props.row * props.col).fill({
-                        x: -1,
-                        y: -1,
-                        value: Player.Empty
-                    }),
+                    squares: initCheckerBoard(props.row, props.col),
                     changePoint: {
                         x: -1,
                         y: -1,
