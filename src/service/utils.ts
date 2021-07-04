@@ -14,5 +14,19 @@ export function initCheckerBoard(row: number, col: number): Array<Point> {
 }
 
 export function copyPoints(Points: Point[]): Point[] {
-    return Points.slice();
+    let result: Point[] = [];
+    Points.forEach(p => {
+        result.push({
+            x: p.x,
+            y: p.y,
+            value: p.value
+        });
+    });
+    return result;
+}
+
+export function copyObjects<T>(objects: T[]): T[] {
+    type TupleToObject<K extends any[]> = { [P in keyof K]: K[P] }
+    let change: TupleToObject<T[]> = objects;
+    return change;
 }
