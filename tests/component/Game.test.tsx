@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import Game, { State, History, Props } from '../src/component/Game';
+import Game, { State, History, Props } from '../../src/component/Game';
 import { unmountComponentAtNode } from 'react-dom';
 
 let container = null;

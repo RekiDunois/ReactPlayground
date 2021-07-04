@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import Board, { Props } from "../src/component/Board";
-import { Point } from "../src/component/Game";
+import Board, { Props } from "../../src/component/Board";
+import { Point } from "../../src/component/Game";
 
 describe("Board testing", () => {
     test("Board render", async () => {

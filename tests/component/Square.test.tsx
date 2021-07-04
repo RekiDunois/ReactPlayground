@@ -1,7 +1,7 @@
 import React from "react";
 import { fireEvent, render } from "@testing-library/react";
-import Square, { Props } from "../src/component/Square";
-import { Player } from "../src/component/Game";
+import Square, { Props } from "../../src/component/Square";
+import { Player } from "../../src/component/Game";
 import { unmountComponentAtNode } from "react-dom";
 
 let container = null;
