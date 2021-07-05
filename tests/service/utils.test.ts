@@ -27,8 +27,7 @@ describe("utils test", () => {
             { x: 0, y: 1, value: Player.Empty }, { x: 1, y: 1, value: Player.Empty }, { x: 2, y: 1, value: Player.Empty }, { x: 3, y: 1, value: Player.Empty }, { x: 4, y: 1, value: Player.Empty },
             { x: 0, y: 2, value: Player.Empty }, { x: 1, y: 2, value: Player.Empty }, { x: 2, y: 2, value: Player.Empty }, { x: 3, y: 2, value: Player.Empty }, { x: 4, y: 2, value: Player.Empty }
         ];
-        const actual = copyObjects<Point>(expected);
-        actual[0].value = Player.Cross;
+        let actual = copyObjects<Point>(expected, (newState) => { newState[0].value = Player.Cross; });
         expect(actual).not.toEqual(expected);
     });
 });
